@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart - Shop</title>
+    <link rel="stylesheet" href="shop.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SmartCart</div>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="nav-icons">
+                <a href="search.html"><button class="search-btn" id="searchBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button></a>
+                <div class="search-bar hidden" id="searchBar">
+                    <input type="text" placeholder="Search..." />
+                    <button class="close-search-btn" id="closeSearchBtn">&times;</button>
+                </div>
+                <a href="cart.html">
+                    <button class="cart-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        <span class="cart-count">0</span>
+                    </button>
+                </a>
+                <a href="login.html" class="login-btn">Login</a>
+                <button class="menu-btn" id="menuBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="shop-container">
+        <aside class="filters">
+            <div class="filter-section">
+                <h3>Categories</h3>
+                <div class="filter-options" id="categoryFilters">
+                    <label class="filter-option">
+                        <input type="checkbox" value="Electronics">
+                        Electronics
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="Fashion">
+                        Fashion
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="Sports">
+                        Sports
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Price Range</h3>
+                <div class="price-range">
+                    <div class="range-slider" id="priceSlider">
+                        <input type="range" min="0" max="1000" value="0" class="range-min">
+                        <input type="range" min="0" max="1000" value="1000" class="range-max">
+                        <div class="slider-track"></div>
+                    </div>
+                    <div class="range-values">
+                        <span id="minPrice">$0</span>
+                        <span id="maxPrice">$1000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Rating</h3>
+                <div class="filter-options" id="ratingFilters">
+                    <label class="filter-option">
+                        <input type="checkbox" value="4">
+                        4+ Stars
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="3">
+                        3+ Stars
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="2">
+                        2+ Stars
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <section class="products-section">
+            <div class="products-header">
+                <div class="products-count">
+                    <h2>All Products</h2>
+                    <span id="productCount">0 Products</span>
+                </div>
+                <div class="products-sort">
+                    <select id="sortSelect">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Product Details Modal Template -->
+    <div id="productDetailsModal" class="product-details-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="product-details-container">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img src="" alt="" id="mainImage">
+                        <button class="gallery-nav prev">&lt;</button>
+                        <button class="gallery-nav next">&gt;</button>
+                    </div>
+                    <div class="thumbnail-container"></div>
+                </div>
+                <div class="product-details">
+                    <h2 class="product-title"></h2>
+                    <div class="product-rating"></div>
+                    <div class="product-price"></div>
+                    <div class="color-options">
+                        <h3>Available Colors</h3>
+                        <div class="color-buttons"></div>
+                    </div>
+                    <div class="product-description"></div>
+                    <div class="product-specifications"></div>
+                    <button class="buy-now-btn">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Item Template -->
+    <template id="cartItemTemplate">
+        <div class="cart-item">
+            <img src="" alt="" class="cart-item-image">
+            <div class="cart-item-details">
+                <h3 class="cart-item-name"></h3>
+                <p class="cart-item-price"></p>
+            </div>
+            <div class="cart-item-actions">
+                <div class="quantity-controls">
+                    <button class="quantity-btn decrease">-</button>
+                    <span class="quantity"></span>
+                    <button class="quantity-btn increase">+</button>
+                </div>
+                <button class="remove-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Product Card Template -->
+    <template id="productCardTemplate">
+        <div class="product-card" data-aos="fade-up">
+            <div class="product-image">
+                <img src="" alt="" loading="lazy">
+                <button class="view-details-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    View Details
+                </button>
+                <button class="add-to-cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                        <path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                    Add to Cart
+                </button>
+            </div>
+            <div class="product-info">
+                <h3></h3>
+                <p class="product-description"></p>
+                <div class="product-rating"></div>
+                <div class="product-price"></div>
+            </div>
+            
+        </div>
+    </template>
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SmartCart</h3>
+                <p>Your one-stop destination for premium shopping experiences.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Service</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns & Exchanges</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to get special offers and updates.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter your email">
+                    <button class="btn primary">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SmartCart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            offset: 100,
+            once: true
+        });
+    </script>
+    <script type="module" src="shop.js"></script>
+    <script src="navbar.js"></script>
+</body>
+</html>
