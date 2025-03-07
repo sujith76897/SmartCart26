@@ -105,3 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
             input.type = input.type === 'password' ? 'text' : 'password';
         });
     });
+
+    // Fetch request
+fetch("https://backend-1gnl.onrender.com/api/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userData),
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));
+  
