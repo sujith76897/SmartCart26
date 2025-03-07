@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Fetch request
-fetch("https://backend-1gnl.onrender.com/api/register", {
+fetch("https://backend-1-0kzk.onrender.com", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
